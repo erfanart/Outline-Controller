@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import sys
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -11,7 +11,7 @@ doc = []
 server = []
 outapi = "your outline api token and url"
 #dist = "your destination file to write key status in that"
-dist = 
+dist = sys.argv[1]
 client = OutlineVPN(api_url=outapi)
 
 AllKeys = client.get_keys()

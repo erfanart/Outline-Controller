@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+# run this file after make status file and alert file
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import os
@@ -124,4 +124,4 @@ message = message + "\n" + "####################################################
 
 
 
-subprocess.run(["send", message,], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+subprocess.run(["alert", message,], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

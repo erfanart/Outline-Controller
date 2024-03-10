@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+from outline_vpn.outline_vpn import OutlineVPN
+import jdatetime 
+nline = []
+doc = []
+server = []
+outapi = "your outline api token and url"
+#dist = "your destination file to write key status in that"
+dist = 
+client = OutlineVPN(api_url=outapi)
+
+AllKeys = client.get_keys()
+
+date = jdatetime.datetime.now()
+date = date.strftime("%Y/%m/%d")
+
+
+
+    
+nline=["#name ::: key id ::: port ::: data limit ::: data usage ::: modifydate ::: status"] + ["\n"]
+for key in AllKeys:
+    name = key.name
+    key_id = key.key_id
+    port = key.port
+
+    if type(key.data_limit) == type(int("1")):
+        limit = round(key.data_limit/pow(10,9),3)
+    else:
+        limit = key.data_limit
+
+    if type(key.used_bytes) == type(int("1")):
+        usage = round(key.used_bytes/pow(10,9),3)
+    else:
+        usage = key.used_bytes
+    #line = [str(name),str(key_id),str(port),str(limit),str(usage)]
+    line = [str(name),str(key_id),str(port),str(limit),str(usage),str(date),str("active")]
+    server = server +[line]
+    line = ':::'.join(line)
+    print(line)
+    nline = nline + [line] +["\n"]
+           
+file = open(dist,"w")
+for line in nline:
+   file.write(line)
+file.close

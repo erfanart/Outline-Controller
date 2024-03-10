@@ -1,5 +1,5 @@
 # Outline-Controller
-## control outline vpn using python and crontab to check time validation of every keys and check out user usage with spesific limitation
+## control outline vpn using python and crontab to check time validation of every keys and check out user usage with specific limitation
 ### problems:
 when i use outline vpn sloution for my users i see some bugs in this service wich dont let me manage my users correctly:
   1- i see sometime my users use out of them limitation and i have some users with larg mount of trafics so i can not reset them trafics and i must add the last usage of users this couse complexity for me and i lost the real usage of them for every month 

@@ -9,8 +9,13 @@ when i use outline vpn sloution for my users i see some bugs in this service wic
 this soulution control time and trafic  of users keys 
 its have four part:
  ## 1- status file 
+ ```bash
+MakeStatus <file name>
+ ```
  ## 2- python for call telegram bot for allerting
+ 
  ## 3- python for call outline api
+  
  ## 4- make crontab 
   
 

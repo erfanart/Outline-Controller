@@ -2,7 +2,13 @@
 import sys
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
+class colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
 
 from outline_vpn.outline_vpn import OutlineVPN
 import jdatetime 
@@ -40,8 +46,8 @@ for key in AllKeys:
     #line = [str(name),str(key_id),str(port),str(limit),str(usage)]
     line = [str(name),str(key_id),str(port),str(limit),str(usage),str(date),str("active")]
     server = server +[line]
+    print("{0}:::{1}".format(colors.OKBLUE,colors.ENDC).join(line))
     line = ':::'.join(line)
-    print(line)
     nline = nline + [line] +["\n"]
            
 file = open(dist,"w")

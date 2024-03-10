@@ -1,0 +1,127 @@
+#!/usr/bin/python3
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import os
+import subprocess
+
+from outline_vpn.outline_vpn import OutlineVPN
+import jdatetime 
+nline = []
+doc = []
+server = []
+outapi = "your outline api key"
+StatusFile = "/etc/VPN/status"
+client = OutlineVPN(api_url=outapi)
+
+AllKeys = client.get_keys()
+
+date = jdatetime.datetime.now().strftime("%Y %m %d")
+date = jdatetime.datetime.now() - jdatetime.timedelta(days=2)
+date = date.strftime("%Y/%m/%d")
+
+
+file = open(StatusFile,"r+")
+lines = file.readlines()#[1:]
+
+print("###################################################################################################")
+message = "######################################################"
+nline = nline + [lines[0]]
+for line in lines[1:]:
+    sline = line.split(':::')
+    sline[len(sline)-1] = sline[len(sline)-1].strip()
+    rewrite = ':::'.join(sline)
+    doc = doc +[sline]
+    #print(sline)
+    #print(doc)
+    #print(rewrite)
+    
+
+for key in AllKeys:
+    name = key.name
+    key_id = key.key_id
+    port = key.port
+
+    if type(key.data_limit) == type(int("1")):
+        limit = round(key.data_limit/pow(10,9),3)
+    else:
+        limit = key.data_limit
+
+    if type(key.used_bytes) == type(int("1")):
+        usage = round(key.used_bytes/pow(10,9),3)
+    else:
+        usage = key.used_bytes
+    line = [str(name),str(key_id),str(port),str(limit),str(usage)]
+    #line = [str(name),str(key_id),str(port),str(limit),str(usage),str(date),str("active")]
+    server = server +[line]
+    line = ':::'.join(line)
+    #nline = nline + [line] +["\n"]
+
+for i in range(0,len(server)):
+    try:
+        if server[i][1] == doc[i][1]:
+            #print( "key by id :" ,server[i][1] ,"is ok")
+            doc[i][0] = server[i][0]
+            doc[i][3] = server[i][3]
+            doc[i][4] = server[i][4]
+            create = jdatetime.date(int(doc[i][5].split('/')[0]),int(doc[i][5].split('/')[1]),int(doc[i][5].split('/')[2]))
+            today = jdatetime.date.today()
+            elapsed = today-create
+            try:
+                if type(float(doc[i][4])) == type(float(1)):
+                    doc[i][4] = doc[i][4]
+            except:
+                doc[i][4] = 0
+            try:
+                if type(float(doc[i][3])) == type(float(1)):
+                    doc[i][3] = doc[i][3]
+            except:
+                doc[i][3] = 0
+            if int(elapsed.days) > 30:
+                print( today ,"key by id :" , doc[i][1] , "and by name:" ,doc[i][0], " is expired")
+                message = message + "\n" + str(today) + "key by id :" + doc[i][1] + " and by name:" + doc[i][0]+ " is expired"
+                doc[i][6] = "expired"
+                client.add_data_limit(doc[i][1], 0 * pow(10,9))
+                doc[i][3] = str('0')
+            elif doc[i][6] == "expired":
+                print( today ,"key by id :" , doc[i][1] , "and by name:" ,doc[i][0], " is activated" )
+                message = message + "\n" + str(today) + "key by id :" + doc[i][1] + " and by name:" + doc[i][0] + " is activated"
+                doc[i][6] = "active"
+                client.add_data_limit(doc[i][1], float(doc[i][4]+20) * pow(10,9))
+                doc[i][3] = str(doc[i][4]+20)
+            elif (float(doc[i][3])-float(doc[i][4])) <= 0:
+                print(today ,"key by id :" , doc[i][1] , "and by name:" ,doc[i][0], "is limited")
+                message = message + "\n" + str(today) + "key by id :" + doc[i][1] + " and by name:" + doc[i][0] + " is limited"
+                client.add_data_limit(doc[i][1], 0 * pow(10,9))
+                doc[i][6] = "limited"
+                doc[i][3] = str('0')
+            elif doc[i][6] == "limited":
+                print( "key by id :" , doc[i][1] , "and by name:" ,doc[i][0], " is activated" )
+                message = message + "\n" +  "key by id :" + doc[i][1] + "and by name:"  + doc[i][0] + " is activated"
+                doc[i][6] = "active"
+            else:
+                doc[i][3] = server[i][3]
+
+            doc[i][4] = server[i][4]
+        else:
+            print(today ,"server keys is not same as file keys server key id is: " ,server[i][1] ,"but file key id is :", doc[i][1])
+    except Exception as e: 
+        print( "key by id :" ,server[i][1] ,"is fucked up beacuse:",e)
+for line in doc:
+    line = ":::".join(line)
+    nline = nline + [line] + ["\n"]
+#print(nline)
+file.close 
+           
+           
+file = open(StatusFile,"w")
+for line in nline:
+   file.write(line)
+file.close
+    
+print("###################################################################################################")
+message = message + "\n" + "#######################################################"
+
+
+
+subprocess.run(["send", message,], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

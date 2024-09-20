@@ -1,5 +1,6 @@
 from manager.setting import CONFIG
 from .sqllite import vpndb
+
 class VpnDb:
     def __init__(self):
         self.type = CONFIG["database"]["type"]

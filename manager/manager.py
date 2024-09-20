@@ -2,6 +2,7 @@ import logging,asyncio
 from . import vpn
 from .bot.key_bot import Bot
 from .setting import *
+import uuid
 
 class Manager:
     def __init__(self):
@@ -10,6 +11,10 @@ class Manager:
         self.config = CONFIG
         self.bots = CONFIG['bots']
         
+    def UuidGen(self):
+        Uuid = uuid.uuid4()
+        return Uuid
+
 
     async def refresher(self):
         while True:
@@ -28,3 +33,4 @@ class Manager:
         refresh = asyncio.create_task(self.refresher())
         tasks.append(refresh)
         await asyncio.gather(*tasks)
+

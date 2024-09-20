@@ -1,8 +1,0 @@
-bots:
-  tele:
-    token: "6817643463:AAGYFvBEB5bIY22RB-3lqA_3164JUkaeKNk"
-    url: "https://api.telegram.org/bot"
-
-  # bale:
-    #  token: "1180611624:wnTXaVwFndAvkh8OMjMJnBdF6NFQDSgQugI7Xe1d"
-    #  url: "https://tapi.bale.ai/bot"

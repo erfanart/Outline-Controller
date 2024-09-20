@@ -19,4 +19,4 @@ def main():
         print(f"Generated UUID: {app.UuidGen()}")
     logger.info("Start Manager..")
     # print(app.UuidGen())
-    # asyncio.run(app.main())
+    asyncio.run(app.main())

@@ -78,10 +78,6 @@ class Bot:
             print(e)
 
 
-
-
-
-
     async def start(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         # text: str = update.message.text
         text: str = "انتخاب کنید"
@@ -97,18 +93,12 @@ class Bot:
         await self.send_message(update=update,context=context,text=text,key=but)
 
 
-
-
-
     async def update_key(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         vpn_server = vpn
         vpn_server.update()
         await self.send_message(update=update,context=context,text="اپدیت انجام شد")
         time.sleep(2)
         await self.start(update=update,context=context)
-
-
-
 
 
     async def active(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -139,7 +129,6 @@ class Bot:
         except Exception as e:
                 print("Acvtive Error :",e)
                 return "get key"
-
 
 
     async def get_value(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -297,9 +286,6 @@ class Bot:
                 }
                 btn = await self.make_inline_key(btn)
                 await self.send_message(update=update,context=context,text="لطفا نوع عملیات خود را مشخص کنید",key=btn) 
-
-
-
 
     ###################Ckeck Key Function
 
@@ -483,14 +469,6 @@ class Bot:
                 btn= await self.make_inline_key(BUTTONS=btn)
                 await self.send_message(update=update,context=context,text=" کلید های یافت شده به صورت زیر میباشد:",key=btn)
     
-
-
-
-
-
-
-
-
 
     async def makeapp(self,TOKEN,URL):
         try:

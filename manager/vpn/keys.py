@@ -67,11 +67,11 @@ class Keys:
         
 
     def check_exist(self,key):
-        print("Check Exit Function")
+        # print("Check Exit Function")
         all = self.all
         for k in all:
             flag = False
-            print("check exition of:" , k.key_id)
+            # print("check exition of:" , k.key_id)
             if key["key_id"] == k.key_id:
                 flag = True
                 break

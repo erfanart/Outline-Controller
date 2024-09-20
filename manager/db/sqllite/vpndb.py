@@ -5,6 +5,8 @@ class VpnDb:
         self.tables = {
             "users" : {
                         "user_id" : "TEXT",
+                        "name"  : "TEXT",
+                        "lastname" : "TEXT",
                         "teleid":"TEXT",
                         "baleid":"TEXT",
                         "phone":"TEXT",

@@ -240,7 +240,7 @@ class Bot:
                     try:
                         k = self.keys.vpndb.info("key_id","keys",key_id)
                         text = int(update.message.text)
-                        self.keys.update_key_key(key=k,method="date",unit=text)
+                        self.keys.vpndb.update(key=k,method="date",unit=text)
                         context.user_data["key_id"] = ""
                         context.user_data["method"]  = ""
                         vpn.update()
@@ -259,7 +259,7 @@ class Bot:
                         text = int(update.message.text)
                         context.user_data["key_id"] = ""
                         context.user_data["method"]  = ""
-                        self.keys.update_key_key(key=k,method="limit",unit=text)
+                        self.keys.vpndb.update(key=k,method="limit",unit=text)
                         vpn.update()
                         await self.send_message(update=update,context=context,text="عملیات با موفقیت انجام شد")
                         await self.start(update=update,context=context)
@@ -422,7 +422,7 @@ class Bot:
                     k = self.keys.vpndb.info("password","keys",key_pass)
                     print(k)
                     text = int(update.message.text)
-                    self.keys.update_key_key(key=k,method="date",unit=text)
+                    self.keys.vpndb.update(key=k,method="date",unit=text)
                     context.user_data["key_pass"] = ""
                     context.user_data["method"]  = ""
                     vpn.update()
@@ -439,7 +439,7 @@ class Bot:
                     text = int(update.message.text)
                     context.user_data["key_pass"] = ""
                     context.user_data["method"]  = ""
-                    self.keys.update_key_key(key=k,method="limit",unit=text)
+                    self.keys.vpndb.update(key=k,method="limit",unit=text)
                     vpn.update()
                     btn = await self.make_inline_key({"back":"بازگشت"})
                     await self.send_message(update=update,context=context,text="عملیات با موفقیت انجام شد",key=btn)

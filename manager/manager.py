@@ -1,6 +1,6 @@
 import logging,asyncio
 from . import vpn
-from .bot.key_bot import Bot
+from .bot import *
 from .setting import *
 import uuid
 

@@ -70,6 +70,9 @@ class VpnDb:
         except Exception as e :
             print(e)
 
+    def add_user(self):
+        pass
+
 
 
 

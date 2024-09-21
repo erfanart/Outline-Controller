@@ -247,7 +247,7 @@ class Server_Side(Cient_Side):
                 }
                 btn = await self.make_inline_key(but)
                 await self.send_message(update=update,context=context,text="مجددا ایدی کلید خود را مشخص کنید  برای",key=btn)
-                # await get_value(update=update,context=context)
+                # await get_key(update=update,context=context)
                 return "get key"
             else:
                 but={
@@ -348,10 +348,10 @@ class Server_Side(Cient_Side):
                 await self.send_message(update=update,context=context,text="لطفا نوع عملیات خود را مشخص کنید",key=btn) 
 
 
-    async def get_value(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def get_key(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             query = update.callback_query.data
-            print(f"get_value qery resived:",query)
+            print(f"get_key qery resived:",query)
             if query == "expire" or query == "rechoose":
                 txt = await self.expired_key()
                 btn ={
@@ -368,7 +368,7 @@ class Server_Side(Cient_Side):
                 await self.update_key(update=update,context=context)
             # key.db.info(mode="status",table="keys",value="limited")
         except Exception as e:
-            print("get_value func first exception :",e)
+            print("get_key func first exception :",e)
             text: str = update.message.text
             try:
                 int(text)
@@ -377,7 +377,7 @@ class Server_Side(Cient_Side):
                 await self.action(update=update,context=context)
                 return "action"
             except Exception as e:
-                print("get_value func second exception :",e)
+                print("get_key func second exception :",e)
                 btn ={
                     "back":"بازگشت"
                 }

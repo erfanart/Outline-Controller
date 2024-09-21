@@ -14,7 +14,7 @@ filterwarnings(action="ignore", message=r".*CallbackQueryHandler", category=PTBU
 
 class Bot(Server_Side):
     def __init__(self):
-        pass
+        super().__init__()
 
 
 
@@ -43,7 +43,7 @@ class Bot(Server_Side):
                 entry_points= [CallbackQueryHandler(self.update_key,"update_key")],
                 states={
                     "update_key" : [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.update_key),CallbackQueryHandler(self.update_key)],
-                    "get key": [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.get_value),CallbackQueryHandler(self.get_value)],
+                    "get key": [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.get_key),CallbackQueryHandler(self.get_key)],
                     "action":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.action),CallbackQueryHandler(self.action)]
                 },
                 fallbacks=[MessageHandler(filters.Text("/cancel"), self.cancel),CallbackQueryHandler(self.cancel,"cancel")],

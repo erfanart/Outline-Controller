@@ -82,10 +82,10 @@ class Bot:
         # text: str = update.message.text
         text: str = "انتخاب کنید"
         btn = {
-            "update":"بروز رسانی کلید ها",
-            "active":"تغییر کلید",
+            "update_server":"بروز رسانی کلید ها",
+            "update_key":"تغییر کلید",
             "check":"بررسی وضعیت کلید",
-            "nonactive":"نمایش کلید های غیر فعال",
+            "nonupdate_key":"نمایش کلید های غیر فعال",
             "all":"نمایش کلید های من"
 
         }
@@ -93,7 +93,7 @@ class Bot:
         await self.send_message(update=update,context=context,text=text,key=but)
 
 
-    async def update_key(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def update_server(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         vpn_server = vpn
         vpn_server.update()
         await self.send_message(update=update,context=context,text="اپدیت انجام شد")
@@ -101,10 +101,10 @@ class Bot:
         await self.start(update=update,context=context)
 
 
-    async def active(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def update_key(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             query = update.callback_query.data
-            print("active func resived:",query)
+            print("update_key func resived:",query)
             if query == "return":
                 await self.start(update=update,context=context)
                 return ConversationHandler.END
@@ -148,7 +148,7 @@ class Bot:
                 return ConversationHandler.END
             else:
                 print("else of get value:",query)
-                await self.active(update=update,context=context)
+                await self.update_key(update=update,context=context)
             # key.db.info(mode="status",table="keys",value="limited")
         except Exception as e:
             print("get_value func first exception :",e)
@@ -169,7 +169,7 @@ class Bot:
             print(text)
 
 
-    async def nonactive(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def nonupdate_key(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         txt = await self.expired_key()
         btn ={
             "start":"بازگشت به منوی اصلی"
@@ -207,7 +207,7 @@ class Bot:
             query = update.callback_query.data 
             print("action function recived:" , query)
             if query == "rechoose":
-                await self.active(update=update,context=context)
+                await self.update_key(update=update,context=context)
                 return "get key"
             elif query == "limit":
                 btn ={
@@ -240,7 +240,7 @@ class Bot:
                     try:
                         k = self.keys.vpndb.info("key_id","keys",key_id)
                         text = int(update.message.text)
-                        self.keys.active_key(key=k,method="date",unit=text)
+                        self.keys.update_key_key(key=k,method="date",unit=text)
                         context.user_data["key_id"] = ""
                         context.user_data["method"]  = ""
                         vpn.update()
@@ -259,7 +259,7 @@ class Bot:
                         text = int(update.message.text)
                         context.user_data["key_id"] = ""
                         context.user_data["method"]  = ""
-                        self.keys.active_key(key=k,method="limit",unit=text)
+                        self.keys.update_key_key(key=k,method="limit",unit=text)
                         vpn.update()
                         await self.send_message(update=update,context=context,text="عملیات با موفقیت انجام شد")
                         await self.start(update=update,context=context)
@@ -422,7 +422,7 @@ class Bot:
                     k = self.keys.vpndb.info("password","keys",key_pass)
                     print(k)
                     text = int(update.message.text)
-                    self.keys.active_key(key=k,method="date",unit=text)
+                    self.keys.update_key_key(key=k,method="date",unit=text)
                     context.user_data["key_pass"] = ""
                     context.user_data["method"]  = ""
                     vpn.update()
@@ -439,7 +439,7 @@ class Bot:
                     text = int(update.message.text)
                     context.user_data["key_pass"] = ""
                     context.user_data["method"]  = ""
-                    self.keys.active_key(key=k,method="limit",unit=text)
+                    self.keys.update_key_key(key=k,method="limit",unit=text)
                     vpn.update()
                     btn = await self.make_inline_key({"back":"بازگشت"})
                     await self.send_message(update=update,context=context,text="عملیات با موفقیت انجام شد",key=btn)
@@ -477,8 +477,8 @@ class Bot:
 
                 MessageHandler(filters.Text(["/start","start","شروع"]) ,self.start),
                 CallbackQueryHandler(self.start,"start"),
-                CallbackQueryHandler(self.update_key,"update"),
-                CallbackQueryHandler(self.nonactive,"nonactive"),
+                CallbackQueryHandler(self.update_server,"update_server"),
+                CallbackQueryHandler(self.nonupdate_key,"nonupdate_key"),
 
                 ConversationHandler(
                     entry_points=[CallbackQueryHandler(self.check_key,"check")],
@@ -491,9 +491,9 @@ class Bot:
                     ),
 
                 ConversationHandler(
-                entry_points= [CallbackQueryHandler(self.active,"active")],
+                entry_points= [CallbackQueryHandler(self.update_key,"update_key")],
                 states={
-                    "active" : [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.active),CallbackQueryHandler(self.active)],
+                    "update_key" : [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.update_key),CallbackQueryHandler(self.update_key)],
                     "get key": [MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.get_value),CallbackQueryHandler(self.get_value)],
                     "action":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.action),CallbackQueryHandler(self.action)]
                 },

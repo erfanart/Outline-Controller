@@ -1,0 +1,4 @@
+database:
+  type: sqllite
+  name: "outline.db"
+  path: "data/outline.db"

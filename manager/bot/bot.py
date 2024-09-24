@@ -7,7 +7,6 @@ import asyncio
 from manager import vpn
 from manager.vpn import *
 from manager.setting import *
-from manager.bot.client_side import *
 from manager.bot.server_side import *
 from warnings import filterwarnings
 filterwarnings(action="ignore", message=r".*CallbackQueryHandler", category=PTBUserWarning)
@@ -28,16 +27,6 @@ class Bot(Server_Side):
                 CallbackQueryHandler(self.start,"start"),
                 CallbackQueryHandler(self.update_server,"update_server"),
                 CallbackQueryHandler(self.nonupdate_key,"nonupdate_key"),
-                # ConversationHandler(
-                #     entry_points = [CallbackQueryHandler(self.start,"start")],
-                #     states={
-                #         "start":[MessageHandler(filters.Text(["/start","start","شروع"]),self.start),CallbackQueryHandler(self.start)],
-                #         "check_user":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.check_user),CallbackQueryHandler(self.check_user)],
-                #         "admin_panel":[CallbackQueryHandler(self.admin_panel,"admin_panel")],
-                #         # "change":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,action),CallbackQueryHandler(action)]
-                #     },
-                #     fallbacks=[MessageHandler(filters.Text("/cancel"), self.cancel),CallbackQueryHandler(self.cancel,"cancel")]
-                #     ),
                 ConversationHandler(
                     entry_points=[CallbackQueryHandler(self.check_key,"check")],
                     states={

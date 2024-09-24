@@ -1,12 +1,12 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from manager.bot.client_side import Cient_Side
+from manager.bot.front import Front
 from manager.vpn import Keys
 from manager.vpn.server import Server
 from manager.setting import CONFIG
 from .admin import Admin
 
-class Users(Cient_Side):
+class Users(Front):
 
     def __init__(self):
         self.URL = CONFIG['servers']['url']

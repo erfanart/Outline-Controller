@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ConversationHandler,ContextTypes
-from manager.bot.client_side import *
+from manager.bot.front import Front
 from manager.vpn.server import Server
 from manager.setting import *
 from manager.vpn import *
@@ -9,7 +9,7 @@ import asyncio
 
 
 
-class Manage_Key(Cient_Side):
+class Manage_Key(Front):
     
     def __init__(self):
         self.URL = CONFIG['servers']['url']

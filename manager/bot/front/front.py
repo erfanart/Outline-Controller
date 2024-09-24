@@ -5,7 +5,7 @@ from telegram import InlineKeyboardButton,InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 import asyncio 
 
-class Cient_Side:
+class Front:
 
     async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         print(f'Update {update} Cussed Error {context.error}')

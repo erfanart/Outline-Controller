@@ -4,7 +4,7 @@ from manager.bot.front import Front
 from manager.setting import *
 from manager.vpn import *
  
-class Admin(Front):
+class Client(Front):
     
     async def panel(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         text: str = "انتخاب کنید"

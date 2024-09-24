@@ -1,8 +1,8 @@
 from typing import Final
 from telegram import Update,Bot,KeyboardButton,ReplyKeyboardMarkup
 from telegram.constants import ParseMode
-from telegram import InlineKeyboardButton,InlineKeyboardMarkup,ReplyKeyboardRemove
-from telegram.ext import Application, CommandHandler, MessageHandler,ConversationHandler,BaseHandler,JobQueue , filters, ContextTypes,Updater,CallbackContext, CallbackQueryHandler
+from telegram import InlineKeyboardButton,InlineKeyboardMarkup
+from telegram.ext import ContextTypes
 import asyncio 
 
 class Cient_Side:
@@ -11,11 +11,7 @@ class Cient_Side:
         print(f'Update {update} Cussed Error {context.error}')
 
 
-    async def cancel(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # await context.bot.send_message(chat_id= update.effective_chat.id,text = " ختم لغو شد جهت شروع مجدد روی گزینه ی زیر کلیک کنید",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="منو اصلی",callback_data="/start")]]))
-        # await self.start(update=update,context=context)
-        print("cancelling done")
-        return ConversationHandler.END
+
 
 
     async def remove_msg(self,context: ContextTypes.DEFAULT_TYPE):

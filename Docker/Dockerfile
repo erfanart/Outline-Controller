@@ -1,13 +1,19 @@
 FROM lsiobase/alpine.python
 
-WORKDIR /app
+# WORKDIR /app.
 
-COPY  -r ../manager /app/
-COPY  -r ../config  /app/
-COPY ../config.yaml /app/
-COPY ../requirements.txt /app/
-COPY ../main.py /app/
-COPY entrypoint.sh /app/
+COPY  -r ..manager /app/
+
+COPY  -r ..config  /app/
+
+COPY ..config.yaml /app/
+
+COPY ..requirements.txt /app/
+
+COPY ..main.py /app/
+
+COPY ./entrypoint.sh /app/
+
 RUN mkdir /app/data
 RUN cp -r /app/config /app/config-default
 RUN cp -r /app/data /app/data-default

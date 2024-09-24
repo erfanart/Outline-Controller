@@ -1,7 +1,7 @@
 
 from typing import Final
 from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler,ConversationHandler,BaseHandler,JobQueue , filters, ContextTypes,Updater,CallbackContext, CallbackQueryHandler
+from telegram.ext import Application, MessageHandler,ConversationHandler , filters, CallbackQueryHandler
 from telegram.warnings import PTBUserWarning
 import asyncio 
 from manager import vpn
@@ -32,7 +32,7 @@ class Bot(Server_Side):
                     states={
                         "check":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.check_key),CallbackQueryHandler(self.check_key)],
                         "details":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.check_key_detail),CallbackQueryHandler(self.check_key_detail)],
-                        # "change":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,action),CallbackQueryHandler(action)]
+                        "change":[MessageHandler(filters.TEXT &( ~ filters.COMMAND) ,self.action),CallbackQueryHandler(self.action)]
                     },
                     fallbacks=[MessageHandler(filters.Text("/cancel"), self.cancel),CallbackQueryHandler(self.cancel,"cancel")],
                     ),

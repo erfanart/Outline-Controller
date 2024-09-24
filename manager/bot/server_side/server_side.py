@@ -16,12 +16,10 @@ class Server_Side(Manage_Key):
         self.users = Users()
 
     async def start(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # text: str = update.message.text
-        print("start command")
         UserRole = await self.users.check_user(update=update,context=context)
-        if UserRole == "Is_Admin":
-            await self.users.admin.panel(update=update,context=context)
-        
+        user = getattr(self.users,str.lower(UserRole))
+        await user.start(update=update,context=context)
+
         
 
     async def cancel(self,update: Update, context: ContextTypes.DEFAULT_TYPE):

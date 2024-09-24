@@ -5,7 +5,7 @@ from manager.setting import *
 from manager.vpn import *
  
 class Guest(Front):
-    async def panel(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def start(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         text: str = """
 سلام به ربات ما خوش آمدید
 برای فعال سازی پنل مدیریت ، 

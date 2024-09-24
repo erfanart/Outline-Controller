@@ -25,9 +25,9 @@ class Users(Front):
         print("Checking User : " , update.effective_user.id)
         try : 
             chatid = update.effective_user.id
-            if chatid == 647340579:
+            if chatid == 647340578:
                 return "Admin"
-            elif chatid == 647340578:
+            elif chatid == 647340579:
                 return "Client"
             else:
                 return "Guest"

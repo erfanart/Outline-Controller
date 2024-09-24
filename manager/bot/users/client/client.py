@@ -6,7 +6,7 @@ from manager.vpn import *
  
 class Client(Front):
     
-    async def panel(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def start(self,update: Update, context: ContextTypes.DEFAULT_TYPE):
         text: str = "انتخاب کنید"
         btn = {
             "update_key":"تغییر کلید",
